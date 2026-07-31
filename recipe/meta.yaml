@@ -17,15 +17,21 @@ requirements:
     - {{ compiler('c') }}
     - {{ stdlib("c") }}
   host:
+    - meson-python >=0.13.0
+    - cmake
+    - ninja
     - python
-    - setuptools >=77
+    - python-gil     # [py>=314]
+    - pip
     - mkl-devel
     - cython
     - numpy
+    - wheel  >=0.41.3
   run:
     - python
+    - python-gil     # [py>=314]
+    - {{ pin_compatible('mkl') }}
     - numpy
-    - mkl-service
 
 test:
   commands:
@@ -35,11 +41,10 @@ test:
     - pip
     - pytest
     - scipy >=1.10
+    - mkl-service
   imports:
     - mkl_fft
     - mkl_fft.interfaces
-    - mkl_fft.interfaces.numpy_fft
-    - mkl_fft.interfaces.scipy_fft
 
 about:
   home: http://github.com/IntelPython/mkl_fft
